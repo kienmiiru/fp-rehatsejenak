@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
-import { Text, TouchableOpacity, View, TextInput, ToastAndroid } from "react-native"
+import { useState } from "react"
+import { Text, TouchableOpacity, View, TextInput, ToastAndroid, Alert } from "react-native"
 import { StyleSheet } from "react-native";
-import { auth, db } from '../../firebaseConfig'
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { addDoc, collection, doc, setDoc } from "firebase/firestore";
-
+import { auth, db } from "../configs/firebaseConfig"
+import { createUserWithEmailAndPassword } from "firebase/auth"
+import { doc, setDoc } from "firebase/firestore"
 
 async function register(email, password, passwordConfirm, fullName, phoneNumber, address) {
     if (!email || !password || !passwordConfirm || !fullName || !phoneNumber || !address) {
@@ -23,24 +22,24 @@ async function register(email, password, passwordConfirm, fullName, phoneNumber,
             address, fullName, phoneNumber
         })
 
-        ToastAndroid.show('Akun berhasil dibuat! Silahkan masuk', 6)
+        ToastAndroid.show('Akun berhasil dibuat!', 6)
 
         return true
     } catch (err) {
-        console.error(error)
-        const errorCode = error.code;
-        const errorMessage = error.message;
+        console.error(err)
+        let errorCode = err.code;
+        let errorMessage = err.message;
         if (errorCode == 'auth/email-already-in-use') {
-            ToastAndroid.show('Email ini sudah digunakan! Silahkan masuk atau mendaftar menggunakan email lain.', 6)
+            Alert.alert('Kesalahan', 'Email ini sudah digunakan! Silahkan masuk atau mendaftar menggunakan email lain')
         } else {
-            ToastAndroid.show('Error: (' + errorCode + ') ' + errorMessage, 6)
+            Alert.alert('Kesalahan', 'Error: (' + errorCode + ') ' + errorMessage)
         }
 
         return false
     }
 }
 
-export default SignUpScreen = ({ navigation }) => {
+let SignUpScreen = ({ navigation }) => {
     let [email, setEmail] = useState('')
     let [password, setPassword] = useState('')
     let [passwordConfirm, setPasswordConfirm] = useState('')
@@ -55,22 +54,22 @@ export default SignUpScreen = ({ navigation }) => {
                 textAlign: 'center'
             }}>Silahkan mendaftar</Text>
             <Text>Alamat e-mail: </Text>
-            <TextInput value={email} onChangeText={e => setEmail(e)} inputMode="email" style={styles.input}></TextInput>
+            <TextInput autoCapitalize="none" value={email} onChangeText={e => setEmail(e)} inputMode="email" style={styles.input} />
             
             <Text>Kata sandi: </Text>
-            <TextInput value={password} onChangeText={e => setPassword(e)} style={styles.input} secureTextEntry={true}></TextInput>
+            <TextInput autoCapitalize="none" value={password} onChangeText={e => setPassword(e)} style={styles.input} secureTextEntry={true} />
             
             <Text>Konfirmasi kata sandi: </Text>
-            <TextInput value={passwordConfirm} onChangeText={e => setPasswordConfirm(e)} style={styles.input} secureTextEntry={true}></TextInput>
+            <TextInput autoCapitalize="none" value={passwordConfirm} onChangeText={e => setPasswordConfirm(e)} style={styles.input} secureTextEntry={true} />
             
             <Text>Nama lengkap: </Text>
-            <TextInput value={fullName} onChangeText={e => setFullname(e)} style={styles.input}></TextInput>
+            <TextInput value={fullName} onChangeText={e => setFullname(e)} style={styles.input} />
             
             <Text>Nomor telepon: </Text>
-            <TextInput value={phoneNumber} onChangeText={e => setPhoneNumber(e)} inputMode="tel" style={styles.input}></TextInput>
+            <TextInput autoCapitalize="none" value={phoneNumber} onChangeText={e => setPhoneNumber(e)} inputMode="tel" style={styles.input} />
             
             <Text>Alamat: </Text>
-            <TextInput value={address} onChangeText={e => setAddress(e)} style={styles.input}></TextInput>
+            <TextInput value={address} onChangeText={e => setAddress(e)} style={styles.input} />
             
             <TouchableOpacity style={styles.button} onPress={async () => {
                 if (await register(email, password, passwordConfirm, fullName, phoneNumber, address)) {
@@ -79,34 +78,34 @@ export default SignUpScreen = ({ navigation }) => {
                         routes: [{ name: 'Masuk' }]
                    })
                 }
-            }}><Text>Daftar</Text></TouchableOpacity>
+            }}><Text style={styles.buttonText}>Daftar</Text></TouchableOpacity>
         </View>
     )
 }
 
-const styles = StyleSheet.create({
+export default SignUpScreen
+
+let styles = StyleSheet.create({
     container: {
         flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center'
+        backgroundColor: '#f8f8f8',
+        justifyContent: 'center',
+        padding: 12
     },
     input: {
-      backgroundColor: '#fff',
-      borderWidth: 2,
-      height: 40,
-      width: 200,
-      padding: 10,
-      borderRadius: 12
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 8,
+        padding: 12,
+        marginBottom: 16,
+        backgroundColor: '#fff',
     },
     button: {
-        borderWidth: 1,
-        borderRadius: 12,
-        width: 120,
-        justifyContent: 'center',
+        padding: 12,
+        backgroundColor: '#007bff',
+        borderRadius: 8,
         alignItems: 'center',
-        width: 'auto',
-        padding: 10,
-        margin: 10,
-        borderRadius: 12,
-    }
+        marginBottom: 16,
+    },
+    buttonText: { color: '#fff', fontWeight: 'bold' },
 })

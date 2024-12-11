@@ -31,6 +31,12 @@ let AdminMainMenuScreen = ({ navigation, route }) => {
             >
                 <Text style={styles.buttonText}>Lihat Semua Customer</Text>
             </TouchableOpacity>
+            <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.navigate('Manajemen Konsol')}
+            >
+                <Text style={styles.buttonText}>Manajemen Konsol</Text>
+            </TouchableOpacity>
             <TouchableOpacity style={[styles.button, styles.logoutButton]} onPress={handleLogout}>
                 <Text style={styles.buttonText}>Logout</Text>
             </TouchableOpacity>

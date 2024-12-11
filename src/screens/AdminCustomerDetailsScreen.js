@@ -52,7 +52,7 @@ let AdminCustomerDetailsScreen = ({ route }) => {
             let rentalQuery = query(
                 collection(db, 'rentalRecords'),
                 where('customerId', '==', customerId)
-            );
+            )
             let rentalSnapshot = await getDocs(rentalQuery)
             let rentalList = rentalSnapshot.docs.map(doc => ({
                 id: doc.id,
@@ -63,7 +63,6 @@ let AdminCustomerDetailsScreen = ({ route }) => {
             let withAdminDetail = await fetchAdminDetails(rentalList, db)
             let withConsoleDetail = await fetchConsoleDetails(withAdminDetail, db)
             withConsoleDetail.sort((a, b) => b.transactionDateCreated - a.transactionDateCreated)
-            console.log('lee', withConsoleDetail)
             setRentals(withConsoleDetail)
         } catch (error) {
             console.error(error)

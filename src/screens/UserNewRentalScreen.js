@@ -1,4 +1,4 @@
-import { collection, getDocs, addDoc, doc, updateDoc, serverTimestamp, Timestamp } from "firebase/firestore"
+import { collection, getDocs, addDoc, doc, updateDoc, serverTimestamp, Timestamp, query, where } from "firebase/firestore"
 import { useEffect, useState } from "react"
 import { Text, TouchableOpacity, View, FlatList, RefreshControl, Alert, Modal } from "react-native"
 import { StyleSheet } from "react-native"
@@ -14,7 +14,11 @@ let UserNewRentalScreen = ({ navigation }) => {
 
     let fetchData = async () => {
         try {
-            let consoleSnapshot = await getDocs(collection(db, 'consoles'))
+            let consoleQuery = query(
+                collection(db, 'consoles'),
+                where('visible', '==', true)
+            )
+            let consoleSnapshot = await getDocs(consoleQuery)
 
             let consoleDocuments = consoleSnapshot.docs.map(doc => ({
                 id: doc.id,

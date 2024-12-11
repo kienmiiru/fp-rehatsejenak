@@ -15,6 +15,8 @@ import AdminMainMenuScreen from './src/screens/AdminMainMenuScreen'
 import AdminRentalsScreen from './src/screens/AdminRentalsScreen'
 import AdminCustomersScreen from './src/screens/AdminCustomersScreen'
 import AdminCustomerDetailsScreen from './src/screens/AdminCustomerDetailsScreen'
+import AdminConsoleManagementScreen from './src/screens/AdminConsoleManagementScreen'
+import AdminAddConsoleScreen from './src/screens/AdminAddConsole'
 
 const Stack = createNativeStackNavigator()
 
@@ -34,6 +36,8 @@ export default function App() {
         <Stack.Screen name="Penyewaan Admin" component={AdminRentalsScreen} />
         <Stack.Screen name="Semua Pelanggan" component={AdminCustomersScreen} />
         <Stack.Screen name="Detail Pelanggan" component={AdminCustomerDetailsScreen} />
+        <Stack.Screen name="Manajemen Konsol" component={AdminConsoleManagementScreen} />
+        <Stack.Screen name="Tambahkan Konsol" component={AdminAddConsoleScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

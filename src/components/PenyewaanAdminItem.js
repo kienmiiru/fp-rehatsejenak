@@ -2,7 +2,6 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native"
 import { timestampToDate, timestampToDateTime } from "../utils/utils"
 
 export default ({ rr, changeStatus }) => {
-    console.log('from item', rr)
     return (
         <View style={styles.card}>
             <Text style={styles.bold}>Nama Pelanggan</Text>
